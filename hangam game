@@ -1,0 +1,44 @@
+import random
+
+# List of possible words
+words = ["python", "hangman", "programming", "developer", "computer", "science"]
+
+# Randomly choose a word
+word = random.choice(words)
+word_letters = list(word)  # Convert word into a list of letters
+guessed_letters = ["_"] * len(word)  # Display word with underscores
+
+# Number of tries
+attempts = 6  
+
+print("🎮 Welcome to Hangman Game!")
+print("Guess the word, one letter at a time.")
+print("You have", attempts, "wrong attempts allowed.")
+print("Word:", " ".join(guessed_letters))
+
+# Game loop
+while attempts > 0 and "_" in guessed_letters:
+    guess = input("\nEnter a letter: ").lower()
+
+    # Validate input
+    if len(guess) != 1 or not guess.isalpha():
+        print("❌ Please enter only a single letter.")
+        continue
+
+    # Check if letter is in word
+    if guess in word_letters:
+        for i in range(len(word)):
+            if word[i] == guess:
+                guessed_letters[i] = guess
+        print("✅ Good guess!")
+    else:
+        attempts -= 1
+        print("❌ Wrong guess! Attempts left:", attempts)
+
+    print("Word:", " ".join(guessed_letters))
+
+# Win or lose
+if "_" not in guessed_letters:
+    print("\n🎉 Congratulations! You guessed the word:", word)
+else:
+    print("\n💀 Game Over! The word was:", word)
